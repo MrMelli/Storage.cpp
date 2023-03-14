@@ -80,31 +80,28 @@ class HashMap:
                # Enter the file directory you want to search the string for
                # ('C:/Users/Ahmed Melli/AppData/Local/Microsoft/WindowsApps/python3.11.exe')
                # you can use current working directory
-                cwd = os.getcwd()
+                cwd = os.getcwd() #ändrat HÄR <------!
 
                 search_str = input("______________\nSearch for a string:\n______________\n")
-
                 # loops through tuple list of format for search
                 extensions = ('.txt', '.md', '.docx')
 
                 # recursively walk through a folder and it's contents using os.walk()
-                for folder, dirs, files in os.walk(cwd):
-                    for file in files:
-                        if file.endswith(extensions):
-                            dir_path = os.path.join(folder, file)
-                            with open(dir_path, 'r', encoding = "utf8") as f:
-                                for line in f:
-                                    # .lower() to implement case insensitivity during input and search
-                                    if search_str.lower() in line.lower():
-                                        print("{} can be found at:\n-----------\n{}\n-----------".format(search_str, dir_path))
-                                        key, value = search_str, dir_path
-                                        self.add(key, value)
-                                        break
-                                    
-                # if file is invalid                             
-                if not os.path.isfile(dir_path):
-                       print("CHECK THE ADDRESS FILE... Seems to be something wrong with the file directory!")
                 
+                #ändrat Här ------>!
+                import os 
+
+def traverse_folder(folder_path):
+    """
+    Recursively walk through a folder and its contents.
+    """
+    for root, directories, files in os.walk(folder_path):
+        for directory in directories:
+            traverse_folder(os.path.join(root, directory))
+        for file in files:
+            file_path = os.path.join(root, file)
+            print(file_path)
+                     
 
 # Driver code
 if __name__ == '__main__':
